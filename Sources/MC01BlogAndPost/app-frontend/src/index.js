@@ -1,11 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import * as serviceWorker from './serviceWorker'
+import { Provider } from 'react-redux'
+import configureStore, { history } from './store'
+import { Route, Switch } from 'react-router'
+import { ConnectedRouter } from 'connected-react-router'
+import { routes } from './router'
 
-console.log('Run app 01');
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App'
+import './index.css'
+import BlogDetail from './pages/BlogDetail'
+
+const store = configureStore()
+console.log('Run app')
+
+ReactDOM.render(
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <Switch>
+                <Route exact path={routes.home.path} component={App} />
+                <Route exact path={routes.blogDetail.path} component={BlogDetail} />
+            </Switch>
+        </ConnectedRouter>
+    </Provider>,
+    document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
