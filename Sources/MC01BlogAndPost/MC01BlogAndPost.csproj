@@ -196,13 +196,19 @@
     <Content Include="app-frontend\dist\bundle.min.js" />
     <Content Include="app-frontend\public\favicon.ico" />
     <Content Include="app-frontend\public\index.html" />
+    <Content Include="app-frontend\src\actions\simpleAction.js" />
     <Content Include="app-frontend\src\App.css" />
     <Content Include="app-frontend\src\App.js" />
-    <Content Include="app-frontend\src\App.test.js" />
     <Content Include="app-frontend\src\index.css" />
     <Content Include="app-frontend\src\index.js" />
     <Content Include="app-frontend\dist\images\logo.svg" />
+    <Content Include="app-frontend\src\pages\BlogDetail.css" />
+    <Content Include="app-frontend\src\pages\BlogDetail.js" />
+    <Content Include="app-frontend\src\reducers\rootReducer.js" />
+    <Content Include="app-frontend\src\reducers\simpleReducer.js" />
+    <Content Include="app-frontend\src\router.js" />
     <Content Include="app-frontend\src\serviceWorker.js" />
+    <Content Include="app-frontend\src\store.js" />
     <Content Include="app-frontend\webpack.config.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -250,6 +256,7 @@
     <Content Include="Views\Home\AppFrontend.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app-frontend\src\components\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
