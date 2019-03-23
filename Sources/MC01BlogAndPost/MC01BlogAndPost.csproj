@@ -193,6 +193,17 @@
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app-frontend\dist\bundle.min.js" />
+    <Content Include="app-frontend\public\favicon.ico" />
+    <Content Include="app-frontend\public\index.html" />
+    <Content Include="app-frontend\src\App.css" />
+    <Content Include="app-frontend\src\App.js" />
+    <Content Include="app-frontend\src\App.test.js" />
+    <Content Include="app-frontend\src\index.css" />
+    <Content Include="app-frontend\src\index.js" />
+    <Content Include="app-frontend\dist\images\logo.svg" />
+    <Content Include="app-frontend\src\serviceWorker.js" />
+    <Content Include="app-frontend\webpack.config.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -206,6 +217,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="app-frontend\.gitignore" />
+    <Content Include="app-frontend\package.json" />
+    <Content Include="app-frontend\public\manifest.json" />
+    <Content Include="app-frontend\README.md" />
+    <Content Include="app-frontend\yarn.lock" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -231,6 +247,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\AppFrontend.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
