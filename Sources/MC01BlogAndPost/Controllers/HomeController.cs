@@ -18,6 +18,11 @@ namespace MC01BlogAndPost.Controllers
             this.blogService = blogService;
         }
 
+        public ActionResult AppFrontend()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             HomeIndexViewModel viewModel = new HomeIndexViewModel();
