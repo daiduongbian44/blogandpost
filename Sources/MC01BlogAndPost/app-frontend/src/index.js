@@ -9,6 +9,7 @@ import { routes } from './router'
 
 import App from './App'
 import './index.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import BlogDetail from './pages/BlogDetail'
 
 const store = configureStore()

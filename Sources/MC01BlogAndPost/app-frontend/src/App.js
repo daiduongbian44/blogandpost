@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import { connect } from 'react-redux';
-import { simpleAction } from './actions/simpleAction';
+
+import { simpleAction } from './actions/simpleAction'
+import { fetchBlogs } from './actions/blogAction'
+
 import { push } from 'connected-react-router'
 import { routes } from './router'
 
@@ -16,6 +19,10 @@ class App extends Component {
         this.handleClickLink = this.handleClickLink.bind(this)
     }
 
+    componentDidMount() {
+        this.props.fetchBlogs()
+    }
+
     handleClickSimpleAction(event) {
         this.props.simpleAction()
     }
@@ -26,38 +33,46 @@ class App extends Component {
 
     render() {
 
-        console.log('Render')
-        console.log(JSON.stringify(this.props))
+        let { listBlogs } = this.props.blogReducer
+        let divBlogItems = null
+        if (listBlogs) {
+            divBlogItems = listBlogs.map((blog, idx) => {
+                return (
+                    <li className="list-group-item" key={idx}>{blog.Title}</li>
+                )
+            })
+        }
 
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a
-                        className="App-link"
-                        onClick={this.handleClickLink}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        Go to blog detail
-                    </a>
+            <div className="App container">
 
-                    <button onClick={this.handleClickSimpleAction}>Test redux action</button>
-                </header>
+                <h2>List blogs from API</h2>
+                <ul className="list-group col-md-6">
+                    {divBlogItems}
+                </ul>
+
+                <a
+                    className="App-link"
+                    onClick={this.handleClickLink}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    Go to blog detail
+                    </a>
+                
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    router: state.router
+    router: state.router,
+    blogReducer: state.blogReducer
 })
 
 const mapDispatchToProps = dispatch => ({
     simpleAction: () => dispatch(simpleAction()),
     push: (data) => dispatch(push(data)),
+    fetchBlogs: () => dispatch(fetchBlogs())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
