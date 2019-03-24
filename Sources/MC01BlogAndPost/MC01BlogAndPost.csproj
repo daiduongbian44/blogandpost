@@ -196,7 +196,9 @@
     <Content Include="app-frontend\dist\bundle.min.js" />
     <Content Include="app-frontend\public\favicon.ico" />
     <Content Include="app-frontend\public\index.html" />
+    <Content Include="app-frontend\src\actions\blogAction.js" />
     <Content Include="app-frontend\src\actions\simpleAction.js" />
+    <Content Include="app-frontend\src\actions\types.js" />
     <Content Include="app-frontend\src\App.css" />
     <Content Include="app-frontend\src\App.js" />
     <Content Include="app-frontend\src\index.css" />
@@ -204,6 +206,7 @@
     <Content Include="app-frontend\dist\images\logo.svg" />
     <Content Include="app-frontend\src\pages\BlogDetail.css" />
     <Content Include="app-frontend\src\pages\BlogDetail.js" />
+    <Content Include="app-frontend\src\reducers\blogReducer.js" />
     <Content Include="app-frontend\src\reducers\rootReducer.js" />
     <Content Include="app-frontend\src\reducers\simpleReducer.js" />
     <Content Include="app-frontend\src\router.js" />

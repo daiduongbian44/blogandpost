@@ -26,20 +26,6 @@ namespace MC01BlogAndPost.Controllers
         public ActionResult Index()
         {
             HomeIndexViewModel viewModel = new HomeIndexViewModel();
-            viewModel.ListBlogs = blogService.GetLists();
-
-            if(viewModel.ListBlogs.Count <= 0)
-            {
-                for(var i = 1; i < 10; ++i)
-                {
-                    blogService.AddNew(new Blog()
-                    {
-                        BlogId = i,
-                        Title = "Title " + i,
-                        Content = "Content " + i
-                    });
-                }
-            }
 
             viewModel.ListBlogs = blogService.GetLists();
 
@@ -59,5 +45,15 @@ namespace MC01BlogAndPost.Controllers
 
             return View();
         }
+
+        public ActionResult ListBlogs()
+        {
+            return Json(new
+            {
+                Success = true,
+                ListBlogs = blogService.GetLists()
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
