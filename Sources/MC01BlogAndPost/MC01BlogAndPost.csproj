@@ -201,6 +201,7 @@
     <Content Include="app-frontend\src\actions\types.js" />
     <Content Include="app-frontend\src\App.css" />
     <Content Include="app-frontend\src\App.js" />
+    <Content Include="app-frontend\src\components\ListBlog.js" />
     <Content Include="app-frontend\src\index.css" />
     <Content Include="app-frontend\src\index.js" />
     <Content Include="app-frontend\dist\images\logo.svg" />
@@ -259,7 +260,6 @@
     <Content Include="Views\Home\AppFrontend.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app-frontend\src\components\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

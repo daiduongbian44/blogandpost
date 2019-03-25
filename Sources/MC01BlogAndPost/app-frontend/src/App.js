@@ -7,8 +7,11 @@ import { fetchBlogs } from './actions/blogAction'
 
 import { push } from 'connected-react-router'
 import { routes } from './router'
+import { ListBlog } from './components/ListBlog'
 
 let logo = '/app-frontend/dist/images/logo.svg'
+
+
 
 class App extends Component {
 
@@ -58,6 +61,10 @@ class App extends Component {
                     rel="noopener noreferrer">
                     Go to blog detail
                     </a>
+
+                <hr/>
+
+                <ListBlog />
                 
             </div>
         );
