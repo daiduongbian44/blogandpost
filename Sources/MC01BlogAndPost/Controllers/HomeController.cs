@@ -12,10 +12,12 @@ namespace MC01BlogAndPost.Controllers
     public class HomeController : Controller
     {
         private readonly IBlogService blogService;
+        private readonly IPostService postService;
 
-        public HomeController(IBlogService blogService)
+        public HomeController(IBlogService blogService, IPostService postService)
         {
             this.blogService = blogService;
+            this.postService = postService;
         }
 
         public ActionResult AppFrontend()
@@ -55,5 +57,63 @@ namespace MC01BlogAndPost.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult ListPosts(int blogId, int postId)
+        {
+            if(postId <= 0)
+            {
+                if (blogId <= 0)
+                {
+                    return Json(new
+                    {
+                        Success = true,
+                        ListPosts = postService.GetLists()
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new
+                {
+                    Success = true,
+                    ListPosts = postService.FindByBlogId(blogId)
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                Success = true,
+                ListPosts = postService.GetOne(postId)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListPostsNew()
+        {
+            // Request.QueryString["end"] == null ? "0" : Request.QueryString["end"]
+            var strBlogId = Request.QueryString["blogId"] ?? "0"; 
+            var strPostId = Request.QueryString["postId"] ?? "0";
+
+            int blogId = int.Parse(strBlogId);
+            int postId = int.Parse(strPostId);
+
+            if (postId <= 0)
+            {
+                if (blogId <= 0)
+                {
+                    return Json(new
+                    {
+                        Success = true,
+                        ListPosts = postService.GetLists()
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new
+                {
+                    Success = true,
+                    ListPosts = postService.FindByBlogId(blogId)
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new
+            {
+                Success = true,
+                ListPosts = postService.GetOne(postId)
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

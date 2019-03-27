@@ -8,6 +8,8 @@ export class ListBlog extends React.Component {
         this.state = {
             listBlogs: []
         }
+
+        this.handleClickIntoBlog = this.handleClickIntoBlog.bind(this)
     }
 
     componentDidMount() {
@@ -24,6 +26,27 @@ export class ListBlog extends React.Component {
             })
     }
 
+    handleClickIntoBlog(blog) {
+        let that = this
+        if (blog.data) return
+
+        // blog.BlogId
+        axios.get(`/Home/ListPostsNew?blogId=${blog.BlogId}`)
+            .then(function (response) {
+                let {
+                    listBlogs
+                } = that.state
+                blog.data = JSON.stringify(response.data.ListPosts)
+
+                that.setState({
+                    listBlogs
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     render() {
 
         let {
@@ -31,13 +54,16 @@ export class ListBlog extends React.Component {
         } = this.state
 
         let divItems = null
+        let that = this
+
         if (listBlogs) {
             divItems = listBlogs.map((blog) => {
                 return (
-                    <li className="list-group-item">
+                    <li className="list-group-item" onClick={that.handleClickIntoBlog.bind(that, blog)}>
                         <h4>{blog.Title}</h4>
                         <p>{blog.Content}</p>
-                    </li>    
+                        {blog.data ? <p>{blog.data}</p> : null }
+                    </li>
                 )
             })
         }
