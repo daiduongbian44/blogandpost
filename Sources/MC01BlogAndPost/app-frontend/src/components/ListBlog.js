@@ -34,7 +34,10 @@ export class ListBlog extends React.Component {
         if (listBlogs) {
             divItems = listBlogs.map((blog) => {
                 return (
-                    <li>{blog.Title}</li>    
+                    <li className="list-group-item">
+                        <h4>{blog.Title}</h4>
+                        <p>{blog.Content}</p>
+                    </li>    
                 )
             })
         }
@@ -42,7 +45,7 @@ export class ListBlog extends React.Component {
         return (
             <div>
                 <h3>ListBlog Component</h3>
-                <ul>{divItems}</ul>
+                <ul className="list-group col-md-6">{divItems}</ul>
             </div>
         )
     }
