@@ -98,8 +98,7 @@ namespace MC01BlogAndPost.Controllers
                 {
                     return Json(new
                     {
-                        Success = true,
-                        ListPosts = postService.GetLists()
+                        Success = true
                     }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new
@@ -113,6 +112,20 @@ namespace MC01BlogAndPost.Controllers
             {
                 Success = true,
                 ListPosts = postService.GetOne(postId)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        //Home/AddNewBlog
+        [HttpPost]
+        public ActionResult AddNewBlog(Blog blog)
+        {
+            var result = blogService.AddNew(blog);
+ 
+            return Json(new
+            {
+                Success = true,
+                ListBlogs = blogService.GetLists(),
+                IsSuccessAddNewBlog = result
             }, JsonRequestBehavior.AllowGet);
         }
     }

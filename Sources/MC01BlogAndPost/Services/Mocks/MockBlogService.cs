@@ -11,6 +11,7 @@ namespace MC01BlogAndPost.Services.Mocks
     {
 
         private static List<Blog> ListBlogs = new List<Blog>();
+        private static int AutoIncrease = 1;
 
         public MockBlogService()
         {
@@ -20,7 +21,7 @@ namespace MC01BlogAndPost.Services.Mocks
                 {
                     ListBlogs.Add(new Blog()
                     {
-                        BlogId = i,
+                        BlogId = (AutoIncrease++),
                         Title = "Title " + i,
                         Content = "Content " + i
                     });
@@ -30,12 +31,14 @@ namespace MC01BlogAndPost.Services.Mocks
 
         public bool AddNew(Blog data)
         {
+            data.BlogId = (AutoIncrease++);
             ListBlogs.Add(data);
             return true;
         }
 
         public List<Blog> GetLists()
         {
+            ListBlogs.Sort((b1, b2) => b2.BlogId.CompareTo(b1.BlogId));
             return ListBlogs;
         }
     }
