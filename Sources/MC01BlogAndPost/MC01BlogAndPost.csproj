@@ -177,6 +177,7 @@
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="Entities\Blog.cs" />
+    <Compile Include="Entities\Post.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -189,7 +190,9 @@
     <Compile Include="Services\Implements\BlogService.cs" />
     <Compile Include="Services\Interfaces\IBaseService.cs" />
     <Compile Include="Services\Interfaces\IBlogService.cs" />
+    <Compile Include="Services\Interfaces\IPostService.cs" />
     <Compile Include="Services\Mocks\MockBlogService.cs" />
+    <Compile Include="Services\Mocks\MockPostService.cs" />
     <Compile Include="ViewModels\HomeIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

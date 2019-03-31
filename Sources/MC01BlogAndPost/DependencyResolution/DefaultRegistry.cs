@@ -33,6 +33,7 @@ namespace MC01BlogAndPost.DependencyResolution {
 					scan.With(new ControllerConvention());
                 });
             For<IBlogService>().Use<MockBlogService>();
+            For<IPostService>().Use<MockPostService>();
         }
 
         #endregion
