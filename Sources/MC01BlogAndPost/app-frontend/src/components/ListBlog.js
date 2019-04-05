@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react'
+import Select from 'react-select'
 const axios = require('axios')
 
 export class ListBlog extends React.Component {
@@ -11,13 +12,25 @@ export class ListBlog extends React.Component {
                 Title: '',
                 Content: ''
             },
-            messageNewBlog: ''
+            newPost: {
+                Title: '',
+                Content: '',
+                Blog: null
+            },
+            messageNewBlog: '',
+            messageNewPost: ''
         }
 
         this.handleClickIntoBlog = this.handleClickIntoBlog.bind(this)
         this.handleChangeInputTitle = this.handleChangeInputTitle.bind(this)
         this.handleChangeInputContent = this.handleChangeInputContent.bind(this)
         this.handleClickSaveBlog = this.handleClickSaveBlog.bind(this)
+        this.renderListPosts = this.renderListPosts.bind(this)
+
+        this.handleChangeInputPostTitle = this.handleChangeInputPostTitle.bind(this)
+        this.handleChangeInputPostContent = this.handleChangeInputPostContent.bind(this)
+        this.handleChangeInputPostBlog = this.handleChangeInputPostBlog.bind(this)
+        this.handleClickSavePost = this.handleClickSavePost.bind(this)
     }
 
     componentDidMount() {
@@ -44,7 +57,7 @@ export class ListBlog extends React.Component {
                 let {
                     listBlogs
                 } = that.state
-                blog.data = JSON.stringify(response.data.ListPosts)
+                blog.listPosts = response.data.ListPosts
 
                 that.setState({
                     listBlogs
@@ -55,6 +68,16 @@ export class ListBlog extends React.Component {
             })
     }
 
+    handleChangeInputPostTitle(event) {
+        let {
+            newPost
+        } = this.state
+        newPost.Title = event.target.value
+        this.setState({
+            newPost
+        })
+    }
+
     handleChangeInputTitle(event) {
         let {
             newBlog
@@ -62,6 +85,16 @@ export class ListBlog extends React.Component {
         newBlog.Title = event.target.value
         this.setState({
             newBlog
+        })
+    }
+
+    handleChangeInputPostContent(event) {
+        let {
+            newPost
+        } = this.state
+        newPost.Content = event.target.value
+        this.setState({
+            newPost
         })
     }
 
@@ -75,12 +108,27 @@ export class ListBlog extends React.Component {
         })
     }
 
+    handleChangeInputPostBlog(selectedOption) {
+        let {
+            newPost
+        } = this.state
+        newPost.Blog = selectedOption
+        console.log('Run here ', selectedOption)
+        this.setState({
+            newPost
+        })
+    }
+
     handleClickSaveBlog() {
         let {
             newBlog,
             listBlogs
         } = this.state
-        if (newBlog.Title && newBlog.Content) {
+        if (newBlog.Title
+            && newBlog.Title.trim() != ''
+            && newBlog.Content
+            && newBlog.Content.trim() != ''
+        ) {
             let that = this
 
             axios.post('/Home/AddNewBlog', newBlog)
@@ -98,7 +146,7 @@ export class ListBlog extends React.Component {
                 for (var newBlog of ListBlogs) {
                     for (var blog of listBlogs) {
                         if (newBlog.BlogId === blog.BlogId) {
-                            newBlog.data = blog.data
+                            newBlog.listPosts = blog.listPosts
                         }
                     }
                 }
@@ -119,16 +167,82 @@ export class ListBlog extends React.Component {
         }
     }
 
+    handleClickSavePost() {
+        let {
+            newPost,
+            listBlogs
+        } = this.state
+        if (newPost.Title
+            && newPost.Title.trim() != ''
+            && newPost.Content
+            && newPost.Content.trim() != ''
+            && newPost.Blog != null
+        ) {
+            let that = this
+            newPost.BlogId = newPost.Blog.value
+            axios.post('/Home/AddNewPost', newPost)
+                .then(function (response) {
+                    let {
+                        IsSuccessAddNewPost,
+                        ListPosts
+                    } = response.data
+                    let messageNewPost = ''
+                    if (IsSuccessAddNewPost) {
+                        messageNewPost = 'Added successfully'
+                    } else {
+                        messageNewPost = 'Error'
+                    }
+                    let currentBlog = listBlogs.filter((blog) => {
+                        return blog.BlogId == newPost.BlogId
+                    })[0]
+                    currentBlog.listPosts = ListPosts
+                    that.setState({
+                        messageNewPost,
+                        newPost: {
+                            Title: '',
+                            Content: '',
+                            Blog: null
+                        },
+                        listBlogs
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+            alert("Input your info")
+        }
+    }
+
+    renderListPosts(listPosts) {
+        let divItems = null
+        if (listPosts) {
+            divItems = listPosts.map((post) => {
+                return (
+                    <li>
+                        <h6>{post.Content}</h6>
+                    </li>
+                )
+            })
+        }
+        return (
+            <ul>{divItems}</ul>    
+        )
+    }
+
     render() {
 
         let {
             listBlogs,
             newBlog,
-            messageNewBlog
+            newPost,
+            messageNewBlog,
+            messageNewPost
         } = this.state
 
         let divItems = null
         let that = this
+        let options = []
 
         if (listBlogs) {
             divItems = listBlogs.map((blog) => {
@@ -136,9 +250,16 @@ export class ListBlog extends React.Component {
                     <li className="list-group-item" onClick={that.handleClickIntoBlog.bind(that, blog)}>
                         <h4>{blog.Title}</h4>
                         <p>{blog.Content}</p>
-                        {blog.data ? <p>{blog.data}</p> : null }
+                        {blog.listPosts ? that.renderListPosts(blog.listPosts) : null}
                     </li>
                 )
+            })
+
+            options = listBlogs.map((blog) => {
+                return {
+                    value: blog.BlogId,
+                    label: blog.Title
+                }
             })
         }
 
@@ -164,7 +285,38 @@ export class ListBlog extends React.Component {
                     <button type="button" className="btn btn-success"
                         onClick={this.handleClickSaveBlog}>Add new blog</button>
                 </div>
-                <hr/>
+                <hr />
+                <h3>Add new post</h3>
+                <div className="col-md-6">
+                    <div className="form-group">
+                        <label>Title:</label>
+                        <input type="text" className="form-control"
+                            value={newPost.Title}
+                            onChange={this.handleChangeInputPostTitle}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Content:</label>
+                        <input type="text" className="form-control"
+                            value={newPost.Content}
+                            onChange={this.handleChangeInputPostContent}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label>Blog:</label>
+                        <Select
+                            value={newPost.Blog}
+                            onChange={this.handleChangeInputPostBlog}
+                            options={options}
+                        />
+                    </div>
+
+                    {messageNewPost ? <p>{messageNewPost}</p> : null}
+                    <button type="button" className="btn btn-success"
+                        onClick={this.handleClickSavePost}>Add new post</button>
+                </div>
+                <hr />
                 <h3>ListBlog Component</h3>
                 <ul className="list-group col-md-6">{divItems}</ul>
             </div>
