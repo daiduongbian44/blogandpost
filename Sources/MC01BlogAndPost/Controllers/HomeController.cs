@@ -128,5 +128,19 @@ namespace MC01BlogAndPost.Controllers
                 IsSuccessAddNewBlog = result
             }, JsonRequestBehavior.AllowGet);
         }
+
+        //Home/AddNewPost
+        [HttpPost]
+        public ActionResult AddNewPost(Post post)
+        {
+            var result = postService.AddNew(post);
+
+            return Json(new
+            {
+                Success = true,
+                ListPosts = postService.FindByBlogId(post.BlogId),
+                IsSuccessAddNewPost = result
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
