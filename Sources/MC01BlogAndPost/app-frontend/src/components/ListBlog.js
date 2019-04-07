@@ -1,5 +1,7 @@
 ﻿import React, { Component } from 'react'
 import Select from 'react-select'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+
 const axios = require('axios')
 
 export class ListBlog extends React.Component {
@@ -18,7 +20,9 @@ export class ListBlog extends React.Component {
                 Blog: null
             },
             messageNewBlog: '',
-            messageNewPost: ''
+            messageNewPost: '',
+            isShowModalEditPost: false,
+            currentEditPost: {}
         }
 
         this.handleClickIntoBlog = this.handleClickIntoBlog.bind(this)
@@ -31,6 +35,7 @@ export class ListBlog extends React.Component {
         this.handleChangeInputPostContent = this.handleChangeInputPostContent.bind(this)
         this.handleChangeInputPostBlog = this.handleChangeInputPostBlog.bind(this)
         this.handleClickSavePost = this.handleClickSavePost.bind(this)
+        this.toggleModalEditPost = this.toggleModalEditPost.bind(this)
     }
 
     componentDidMount() {
@@ -214,13 +219,27 @@ export class ListBlog extends React.Component {
         }
     }
 
+    toggleModalEditPost(post) {
+        if(!post) post = {}
+        let {
+            isShowModalEditPost
+        } = this.state
+        isShowModalEditPost = !isShowModalEditPost
+        this.setState({
+            isShowModalEditPost,
+            currentEditPost: post
+        })
+    }
+
     renderListPosts(listPosts) {
         let divItems = null
+        let that = this
         if (listPosts) {
             divItems = listPosts.map((post) => {
                 return (
                     <li>
                         <h6>{post.Content}</h6>
+                        <Button color="warning" onClick={that.toggleModalEditPost.bind(that, post)}>Edit {post.Title}</Button>
                     </li>
                 )
             })
@@ -237,7 +256,9 @@ export class ListBlog extends React.Component {
             newBlog,
             newPost,
             messageNewBlog,
-            messageNewPost
+            messageNewPost,
+            isShowModalEditPost,
+            currentEditPost
         } = this.state
 
         let divItems = null
@@ -319,6 +340,21 @@ export class ListBlog extends React.Component {
                 <hr />
                 <h3>ListBlog Component</h3>
                 <ul className="list-group col-md-6">{divItems}</ul>
+
+                {
+                    // Code javascript comment, show modal
+                }
+                <Modal isOpen={isShowModalEditPost} toggle={that.toggleModalEditPost}>
+                    <ModalHeader>Edit {currentEditPost.Title}</ModalHeader>
+                    <ModalBody>
+                        {currentEditPost.Content}
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={that.toggleModalEditPost}>Do Something</Button>{' '}
+                        <Button color="secondary" onClick={that.toggleModalEditPost}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+
             </div>
         )
     }
