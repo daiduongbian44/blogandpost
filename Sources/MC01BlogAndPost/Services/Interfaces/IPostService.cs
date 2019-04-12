@@ -12,5 +12,7 @@ namespace MC01BlogAndPost.Services.Interfaces
         IEnumerable<Post> FindByBlogId(int blogId);
 
         Post GetOne(int postId);
+
+        bool Update(int postId, Post post);
     }
 }

@@ -55,5 +55,19 @@ namespace MC01BlogAndPost.Services.Mocks
         {
             return ListPosts.FirstOrDefault(p => p.PostId == postId);
         }
+
+        public bool Update(int postId, Post post)
+        {
+            var current = ListPosts.FirstOrDefault(p => p.PostId == postId);
+            if(current == null)
+            {
+                return false;
+            }
+
+            current.Title = post.Title;
+            current.Content = post.Content;
+            current.BlogId = post.BlogId;
+            return true;
+        }
     }
 }
