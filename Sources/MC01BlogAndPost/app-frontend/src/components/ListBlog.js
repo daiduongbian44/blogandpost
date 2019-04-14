@@ -10,6 +10,7 @@ export class ListBlog extends React.Component {
         super(props)
         this.state = {
             listBlogs: [],
+            listOptionBlogs: [],
             newBlog: {
                 Title: '',
                 Content: ''
@@ -22,7 +23,9 @@ export class ListBlog extends React.Component {
             messageNewBlog: '',
             messageNewPost: '',
             isShowModalEditPost: false,
-            currentEditPost: {}
+            currentEditPost: {
+                oldPost: {}
+            }
         }
 
         this.handleClickIntoBlog = this.handleClickIntoBlog.bind(this)
@@ -36,6 +39,13 @@ export class ListBlog extends React.Component {
         this.handleChangeInputPostBlog = this.handleChangeInputPostBlog.bind(this)
         this.handleClickSavePost = this.handleClickSavePost.bind(this)
         this.toggleModalEditPost = this.toggleModalEditPost.bind(this)
+        this.getListOptionBlogs = this.getListOptionBlogs.bind(this)
+
+        this.handleChangeEditPostTitle = this.handleChangeEditPostTitle.bind(this)
+        this.handleChangeEditPostContent = this.handleChangeEditPostContent.bind(this)
+        this.handleChangeEditPostBlog = this.handleChangeEditPostBlog.bind(this)
+        this.handleClickUpdatePost = this.handleClickUpdatePost.bind(this)
+        this.deletePost = this.deletePost.bind(this)
     }
 
     componentDidMount() {
@@ -44,7 +54,8 @@ export class ListBlog extends React.Component {
         axios.get('/Home/ListBlogs')
             .then(function (response) {
                 that.setState({
-                    listBlogs: response.data.ListBlogs
+                    listBlogs: response.data.ListBlogs,
+                    listOptionBlogs: that.getListOptionBlogs(response.data.ListBlogs)
                 })
             })
             .catch(function (error) {
@@ -54,7 +65,7 @@ export class ListBlog extends React.Component {
 
     handleClickIntoBlog(blog) {
         let that = this
-        if (blog.data) return
+        if (blog.listPosts) return
 
         // blog.BlogId
         axios.get(`/Home/ListPostsNew?blogId=${blog.BlogId}`)
@@ -83,6 +94,16 @@ export class ListBlog extends React.Component {
         })
     }
 
+    handleChangeEditPostTitle(event) {
+        let {
+            currentEditPost
+        } = this.state
+        currentEditPost.Title = event.target.value
+        this.setState({
+            currentEditPost
+        })
+    }
+
     handleChangeInputTitle(event) {
         let {
             newBlog
@@ -103,6 +124,16 @@ export class ListBlog extends React.Component {
         })
     }
 
+    handleChangeEditPostContent(event) {
+        let {
+            currentEditPost
+        } = this.state
+        currentEditPost.Content = event.target.value
+        this.setState({
+            currentEditPost
+        })
+    }
+
     handleChangeInputContent(event) {
         let {
             newBlog
@@ -118,9 +149,19 @@ export class ListBlog extends React.Component {
             newPost
         } = this.state
         newPost.Blog = selectedOption
-        console.log('Run here ', selectedOption)
         this.setState({
             newPost
+        })
+    }
+
+    handleChangeEditPostBlog(selectedOption) {
+        let {
+            currentEditPost
+        } = this.state
+        currentEditPost.Blog = selectedOption
+        currentEditPost.BlogId = selectedOption.value
+        this.setState({
+            currentEditPost
         })
     }
 
@@ -157,6 +198,7 @@ export class ListBlog extends React.Component {
                 }
                 that.setState({
                     listBlogs: ListBlogs,
+                    listOptionBlogs: that.getListOptionBlogs(ListBlogs),
                     messageNewBlog,
                     newBlog: {
                         Title: '',
@@ -220,14 +262,30 @@ export class ListBlog extends React.Component {
     }
 
     toggleModalEditPost(post) {
-        if(!post) post = {}
+        if (!post) {
+            post = {
+                Title: '',
+                Content: '',
+                BlogId: 0
+            }
+        }
+        
         let {
-            isShowModalEditPost
+            isShowModalEditPost,
+            listOptionBlogs
         } = this.state
         isShowModalEditPost = !isShowModalEditPost
+        let editPost = {
+            oldPost: post,
+            Title: post.Title,
+            Content: post.Content,
+            BlogId: post.BlogId
+        }
+        
+        editPost.Blog = listOptionBlogs.filter((item) => item.value == post.BlogId)[0]
         this.setState({
             isShowModalEditPost,
-            currentEditPost: post
+            currentEditPost: editPost
         })
     }
 
@@ -240,6 +298,7 @@ export class ListBlog extends React.Component {
                     <li>
                         <h6>{post.Content}</h6>
                         <Button color="warning" onClick={that.toggleModalEditPost.bind(that, post)}>Edit {post.Title}</Button>
+                        <Button color="danger" onClick={that.deletePost.bind(that, post)} className="ml-2">Delete {post.Title}</Button>
                     </li>
                 )
             })
@@ -247,6 +306,89 @@ export class ListBlog extends React.Component {
         return (
             <ul>{divItems}</ul>    
         )
+    }
+
+    getListOptionBlogs(listBlogs) {
+        let options = []
+        if (listBlogs) {
+            options = listBlogs.map((blog) => {
+                return {
+                    value: blog.BlogId,
+                    label: blog.Title
+                }
+            })
+        }
+        return options
+    }
+
+    handleClickUpdatePost() {
+        let {
+            currentEditPost,
+            listBlogs,
+            isShowModalEditPost
+        } = this.state
+        if (currentEditPost.Title
+            && currentEditPost.Title.trim() != ''
+            && currentEditPost.Content
+            && currentEditPost.Content.trim() != ''
+            && currentEditPost.Blog != null
+        ) {
+            let that = this
+            axios.post('/Home/UpdatePost?postId=' + currentEditPost.oldPost.PostId, currentEditPost)
+                .then(function (response) {
+                    let {
+                        ListPosts
+                    } = response.data
+                    
+                    let currentBlog = listBlogs.filter((blog) => {
+                        return blog.BlogId == currentEditPost.BlogId
+                    })[0]
+
+                    currentBlog.listPosts = ListPosts
+
+                    if (currentEditPost.BlogId !== currentEditPost.oldPost.BlogId) {
+                        let oldBlog = listBlogs.filter((blog) => {
+                            return blog.BlogId == currentEditPost.oldPost.BlogId
+                        })[0]
+                        //oldBlog.listPosts.splice(oldBlog.listPosts.indexOf(currentEditPost.oldPost), 1)
+                        oldBlog.listPosts = null
+                        that.handleClickIntoBlog(oldBlog)
+                    }
+
+                    that.setState({
+                        listBlogs,
+                        isShowModalEditPost: !isShowModalEditPost
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+            alert("Input your info")
+        }
+    }
+
+    deletePost(post) {
+        let {
+            listBlogs
+        } = this.state
+
+        if (window.confirm('Are you sure?')) {
+            let that = this
+            axios.post('/Home/DeletePost?postId=' + post.PostId, {})
+                .then(function (response) {
+                    
+                    let currentBlog = listBlogs.filter((blog) => {
+                        return blog.BlogId == post.BlogId
+                    })[0]
+
+                    currentBlog.listPosts = null
+                    that.handleClickIntoBlog(currentBlog)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
     }
 
     render() {
@@ -258,12 +400,12 @@ export class ListBlog extends React.Component {
             messageNewBlog,
             messageNewPost,
             isShowModalEditPost,
-            currentEditPost
+            currentEditPost,
+            listOptionBlogs
         } = this.state
 
         let divItems = null
         let that = this
-        let options = []
 
         if (listBlogs) {
             divItems = listBlogs.map((blog) => {
@@ -274,13 +416,6 @@ export class ListBlog extends React.Component {
                         {blog.listPosts ? that.renderListPosts(blog.listPosts) : null}
                     </li>
                 )
-            })
-
-            options = listBlogs.map((blog) => {
-                return {
-                    value: blog.BlogId,
-                    label: blog.Title
-                }
             })
         }
 
@@ -329,7 +464,7 @@ export class ListBlog extends React.Component {
                         <Select
                             value={newPost.Blog}
                             onChange={this.handleChangeInputPostBlog}
-                            options={options}
+                            options={listOptionBlogs}
                         />
                     </div>
 
@@ -345,12 +480,36 @@ export class ListBlog extends React.Component {
                     // Code javascript comment, show modal
                 }
                 <Modal isOpen={isShowModalEditPost} toggle={that.toggleModalEditPost}>
-                    <ModalHeader>Edit {currentEditPost.Title}</ModalHeader>
+                    <ModalHeader>Edit {currentEditPost.oldPost.Title}</ModalHeader>
                     <ModalBody>
-                        {currentEditPost.Content}
+
+                        <div className="form-group">
+                            <label>Title:</label>
+                            <input type="text" className="form-control"
+                                value={currentEditPost.Title}
+                                onChange={this.handleChangeEditPostTitle}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Content:</label>
+                            <input type="text" className="form-control"
+                                value={currentEditPost.Content}
+                                onChange={this.handleChangeEditPostContent}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Blog:</label>
+                            <Select
+                                value={currentEditPost.Blog}
+                                onChange={this.handleChangeEditPostBlog}
+                                options={listOptionBlogs}
+                            />
+                        </div>
+
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={that.toggleModalEditPost}>Do Something</Button>{' '}
+                        <Button color="primary" onClick={that.handleClickUpdatePost}>Update</Button>
                         <Button color="secondary" onClick={that.toggleModalEditPost}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

@@ -142,5 +142,27 @@ namespace MC01BlogAndPost.Controllers
                 IsSuccessAddNewPost = result
             }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult UpdatePost(int postId, Post post)
+        {
+            var result = postService.Update(postId, post);
+
+            return Json(new
+            {
+                Success = true,
+                ListPosts = postService.FindByBlogId(post.BlogId),
+                IsSuccessUpdatePost = result
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeletePost(int postId)
+        {
+            return Json(new
+            {
+                Success = postService.Delete(postId)
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

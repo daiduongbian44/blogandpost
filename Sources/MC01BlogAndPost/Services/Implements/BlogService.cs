@@ -25,6 +25,11 @@ namespace MC01BlogAndPost.Services.Implements
             }
         }
 
+        public bool Delete(int blogId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Blog> GetLists()
         {
             DatabaseContext context = new DatabaseContext();

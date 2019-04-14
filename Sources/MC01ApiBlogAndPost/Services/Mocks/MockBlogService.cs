@@ -1,11 +1,11 @@
-﻿using MC01BlogAndPost.Entities;
-using MC01BlogAndPost.Services.Interfaces;
+﻿using MC01ApiBlogAndPost.Entities;
+using MC01ApiBlogAndPost.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MC01BlogAndPost.Services.Mocks
+namespace MC01ApiBlogAndPost.Services.Mocks
 {
     public class MockBlogService : IBlogService
     {
