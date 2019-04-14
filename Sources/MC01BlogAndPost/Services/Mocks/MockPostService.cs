@@ -35,6 +35,18 @@ namespace MC01BlogAndPost.Services.Mocks
             return true;
         }
 
+        public bool Delete(int postId)
+        {
+            ListPosts = ListPosts.Where(p => p.PostId != postId).ToList();
+            return true;
+        }
+
+        public bool DeletePostBelongToBlog(int blogId)
+        {
+            ListPosts = ListPosts.Where(p => p.BlogId != blogId).ToList();
+            return true;
+        }
+
         public IEnumerable<Post> FindByBlogId(int blogId)
         {
             foreach(var post in ListPosts)

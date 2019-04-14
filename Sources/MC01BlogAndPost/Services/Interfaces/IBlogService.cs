@@ -9,5 +9,6 @@ namespace MC01BlogAndPost.Services.Interfaces
 {
     public interface IBlogService : IBaseService<Blog>
     {
+        bool Delete(int blogId);
     }
 }

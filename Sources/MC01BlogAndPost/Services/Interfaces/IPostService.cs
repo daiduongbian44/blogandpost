@@ -14,5 +14,9 @@ namespace MC01BlogAndPost.Services.Interfaces
         Post GetOne(int postId);
 
         bool Update(int postId, Post post);
+
+        bool Delete(int postId);
+
+        bool DeletePostBelongToBlog(int blogId);
     }
 }

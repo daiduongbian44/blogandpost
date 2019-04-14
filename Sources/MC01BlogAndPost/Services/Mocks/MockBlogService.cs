@@ -12,8 +12,9 @@ namespace MC01BlogAndPost.Services.Mocks
 
         private static List<Blog> ListBlogs = new List<Blog>();
         private static int AutoIncrease = 1;
+        private readonly IPostService postService;
 
-        public MockBlogService()
+        public MockBlogService(IPostService postService)
         {
             if (ListBlogs.Count <= 0)
             {
@@ -27,12 +28,20 @@ namespace MC01BlogAndPost.Services.Mocks
                     });
                 }
             }
+            this.postService = postService;
         }
 
         public bool AddNew(Blog data)
         {
             data.BlogId = (AutoIncrease++);
             ListBlogs.Add(data);
+            return true;
+        }
+
+        public bool Delete(int blogId)
+        {
+            ListBlogs = ListBlogs.Where(p => p.BlogId != blogId).ToList();
+            postService.DeletePostBelongToBlog(blogId);
             return true;
         }
 

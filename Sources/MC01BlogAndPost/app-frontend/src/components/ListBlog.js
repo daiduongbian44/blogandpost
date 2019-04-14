@@ -45,6 +45,7 @@ export class ListBlog extends React.Component {
         this.handleChangeEditPostContent = this.handleChangeEditPostContent.bind(this)
         this.handleChangeEditPostBlog = this.handleChangeEditPostBlog.bind(this)
         this.handleClickUpdatePost = this.handleClickUpdatePost.bind(this)
+        this.deletePost = this.deletePost.bind(this)
     }
 
     componentDidMount() {
@@ -297,6 +298,7 @@ export class ListBlog extends React.Component {
                     <li>
                         <h6>{post.Content}</h6>
                         <Button color="warning" onClick={that.toggleModalEditPost.bind(that, post)}>Edit {post.Title}</Button>
+                        <Button color="danger" onClick={that.deletePost.bind(that, post)} className="ml-2">Delete {post.Title}</Button>
                     </li>
                 )
             })
@@ -348,7 +350,9 @@ export class ListBlog extends React.Component {
                         let oldBlog = listBlogs.filter((blog) => {
                             return blog.BlogId == currentEditPost.oldPost.BlogId
                         })[0]
-                        oldBlog.listPosts.splice(oldBlog.listPosts.indexOf(currentEditPost.oldPost), 1)
+                        //oldBlog.listPosts.splice(oldBlog.listPosts.indexOf(currentEditPost.oldPost), 1)
+                        oldBlog.listPosts = null
+                        that.handleClickIntoBlog(oldBlog)
                     }
 
                     that.setState({
@@ -361,6 +365,29 @@ export class ListBlog extends React.Component {
                 });
         } else {
             alert("Input your info")
+        }
+    }
+
+    deletePost(post) {
+        let {
+            listBlogs
+        } = this.state
+
+        if (window.confirm('Are you sure?')) {
+            let that = this
+            axios.post('/Home/DeletePost?postId=' + post.PostId, {})
+                .then(function (response) {
+                    
+                    let currentBlog = listBlogs.filter((blog) => {
+                        return blog.BlogId == post.BlogId
+                    })[0]
+
+                    currentBlog.listPosts = null
+                    that.handleClickIntoBlog(currentBlog)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     }
 

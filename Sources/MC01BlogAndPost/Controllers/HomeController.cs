@@ -155,5 +155,14 @@ namespace MC01BlogAndPost.Controllers
                 IsSuccessUpdatePost = result
             }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult DeletePost(int postId)
+        {
+            return Json(new
+            {
+                Success = postService.Delete(postId)
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
