@@ -46,6 +46,7 @@ export class ListBlog extends React.Component {
         this.handleChangeEditPostBlog = this.handleChangeEditPostBlog.bind(this)
         this.handleClickUpdatePost = this.handleClickUpdatePost.bind(this)
         this.deletePost = this.deletePost.bind(this)
+        this.deleteBlog = this.deleteBlog.bind(this)
     }
 
     componentDidMount() {
@@ -391,6 +392,30 @@ export class ListBlog extends React.Component {
         }
     }
 
+    deleteBlog(blog) {
+        let {
+            listBlogs
+        } = this.state
+
+        if (window.confirm('Are you sure?')) {
+            let that = this
+            axios.post('/Home/DeleteBlog?blogId=' + blog.BlogId, {})
+                .then(function (response) {
+                    listBlogs = listBlogs.filter((item) => {
+                        return item.BlogId !== blog.BlogId
+                    })
+
+                    that.setState({
+                        listBlogs,
+                        listOptionBlogs: that.getListOptionBlogs(listBlogs)
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    }
+
     render() {
 
         let {
@@ -410,10 +435,13 @@ export class ListBlog extends React.Component {
         if (listBlogs) {
             divItems = listBlogs.map((blog) => {
                 return (
-                    <li className="list-group-item" onClick={that.handleClickIntoBlog.bind(that, blog)}>
-                        <h4>{blog.Title}</h4>
-                        <p>{blog.Content}</p>
-                        {blog.listPosts ? that.renderListPosts(blog.listPosts) : null}
+                    <li className="list-group-item">
+                        <div onClick={that.handleClickIntoBlog.bind(that, blog)}>
+                            <h4>{blog.Title}</h4>
+                            <p>{blog.Content}</p>
+                            {blog.listPosts ? that.renderListPosts(blog.listPosts) : null}
+                        </div>
+                        <Button color="primary" onClick={that.deleteBlog.bind(that, blog)}>Delete</Button>
                     </li>
                 )
             })
