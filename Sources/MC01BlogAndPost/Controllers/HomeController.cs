@@ -164,5 +164,14 @@ namespace MC01BlogAndPost.Controllers
                 Success = postService.Delete(postId)
             }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult DeleteBlog(int blogId)
+        {
+            return Json(new
+            {
+                Success = blogService.Delete(blogId)
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
