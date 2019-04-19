@@ -50,5 +50,18 @@ namespace MC01ApiBlogAndPost.Services.Mocks
             ListBlogs.Sort((b1, b2) => b2.BlogId.CompareTo(b1.BlogId));
             return ListBlogs;
         }
+
+        public bool Update(int blogId, Blog blog)
+        {
+            var current = ListBlogs.FirstOrDefault(p => p.BlogId == blogId);
+            if (current == null)
+            {
+                return false;
+            }
+
+            current.Title = blog.Title;
+            current.Content = blog.Content;
+            return true;
+        }
     }
 }
