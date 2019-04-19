@@ -10,5 +10,6 @@ namespace MC01ApiBlogAndPost.Services.Interfaces
     public interface IBlogService : IBaseService<Blog>
     {
         bool Delete(int blogId);
+        bool Update(int blogId, Blog blog);
     }
 }

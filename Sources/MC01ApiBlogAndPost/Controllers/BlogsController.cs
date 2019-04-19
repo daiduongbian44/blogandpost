@@ -45,7 +45,17 @@ namespace MC01ApiBlogAndPost.Controllers
                 ListBlogs = blogService.GetLists()
             });
         }
-        
+
+        public IHttpActionResult Put([FromUri] int id, [FromBody] Blog blog)
+        {
+            var result = blogService.Update(id, blog);
+            return Ok(new
+            {
+                Success = true,
+                ListBlogs = blogService.GetLists()
+            });
+        }
+
         public IHttpActionResult Delete(int id)
         {
             return Ok(new
