@@ -4,17 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MC01ApiProduct.Entities
+namespace MC01ApiProduct.Models
 {
-    public class User
+    public class UserInputModel
     {
-        [Key]
-        public int UserId { get; set; }
-
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Email { get; set; }
-
-        public virtual List<UserProduct> UserProducts { get; set; }
     }
 }

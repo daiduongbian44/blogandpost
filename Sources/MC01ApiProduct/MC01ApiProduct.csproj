@@ -203,6 +203,8 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\UserProductsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
@@ -224,12 +226,19 @@
     <Compile Include="Migrations\201905210742274_InitData.Designer.cs">
       <DependentUpon>201905210742274_InitData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905210946349_AddUserEmail.cs" />
+    <Compile Include="Migrations\201905210946349_AddUserEmail.Designer.cs">
+      <DependentUpon>201905210946349_AddUserEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoryInputModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\DataApiResult.cs" />
     <Compile Include="Models\ProductInputModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\UserInputModel.cs" />
+    <Compile Include="Models\UserLikeProductInputModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Impls\CategoryServiceImpl.cs" />
     <Compile Include="Services\Impls\ProductServiceImpl.cs" />
@@ -285,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905210742274_InitData.resx">
       <DependentUpon>201905210742274_InitData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905210946349_AddUserEmail.resx">
+      <DependentUpon>201905210946349_AddUserEmail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
