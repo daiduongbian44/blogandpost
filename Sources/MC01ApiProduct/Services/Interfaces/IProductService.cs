@@ -9,6 +9,8 @@ namespace MC01ApiProduct.Services.Interfaces
 {
     public interface IProductService
     {
-        List<ProductViewModel> GetLists(); 
+        List<ProductViewModel> GetLists();
+        bool AddProduct(ProductInputModel model);
+        bool DeleteProduct(int productId);
     }
 }

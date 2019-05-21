@@ -7,13 +7,13 @@ namespace MC01ApiProduct.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitData : IMigrationMetadata
+    public sealed partial class InitDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitData));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201905201538557_InitData"; }
+            get { return "201905210740456_InitDatabase"; }
         }
         
         string IMigrationMetadata.Source

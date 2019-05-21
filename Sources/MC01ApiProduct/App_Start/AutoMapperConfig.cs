@@ -16,6 +16,9 @@ namespace MC01ApiProduct.App_Start
             {
                 config.CreateMap<Category, CategoryViewModel>().ReverseMap();
                 config.CreateMap<Product, ProductViewModel>().ReverseMap();
+
+                config.CreateMap<Category, CategoryInputModel>().ReverseMap();
+                config.CreateMap<Product, ProductInputModel>().ReverseMap();
             });
         }
     }

@@ -14,5 +14,7 @@ namespace MC01ApiProduct.Context
         IDbSet<Category> Categories { get; }
         IDbSet<User> Users { get; }
         IDbSet<UserProduct> UserProducts { get; }
+
+        int SaveChanges();
     }
 }

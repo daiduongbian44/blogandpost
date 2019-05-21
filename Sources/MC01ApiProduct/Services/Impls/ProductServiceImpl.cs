@@ -12,19 +12,40 @@ namespace MC01ApiProduct.Services.Impls
 {
     public class ProductServiceImpl : IProductService
     {
-        private IContext context;
+        private readonly IContext _context;
 
         public ProductServiceImpl(IContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         public List<ProductViewModel> GetLists()
         {
-            return this.context.Products.ToList().Select(p =>
-            {
-                return Mapper.Map<Product, ProductViewModel>(p);
-            }).ToList();
+            return this._context.Products.ToList().Select(Mapper.Map<Product, ProductViewModel>).ToList();
+        }
+
+        public bool AddProduct(ProductInputModel model)
+        {
+            var existedProd =
+                _context.Products.FirstOrDefault(c => c.Name.Equals(model.Name));
+            if (existedProd != null) return false;
+
+            var existedCat = _context.Categories.FirstOrDefault(c => c.CategoryId == model.CategoryId);
+            if (existedCat == null) return false;
+
+            var newEntityProd = Mapper.Map<ProductInputModel, Product>(model);
+            _context.Products.Add(newEntityProd);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteProduct(int productId)
+        {
+            var existedProduct = _context.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (existedProduct == null || existedProduct.UserProducts.Count > 0) return false;
+            _context.Products.Remove(existedProduct);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

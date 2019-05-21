@@ -1,9 +1,10 @@
+using MC01ApiProduct.Context;
+
 namespace MC01ApiProduct.Migrations
 {
-    using Context;
     using System;
     using System.Data.Entity.Migrations;
-
+    
     public partial class InitData : DbMigration
     {
         public override void Up()

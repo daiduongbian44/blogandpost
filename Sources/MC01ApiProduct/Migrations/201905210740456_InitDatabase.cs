@@ -27,7 +27,7 @@ namespace MC01ApiProduct.Migrations
                         CategoryId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProductId)
-                .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.Categories", t => t.CategoryId)
                 .Index(t => t.CategoryId);
             
             CreateTable(
@@ -39,8 +39,8 @@ namespace MC01ApiProduct.Migrations
                         ProductId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserProductId)
-                .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.Products", t => t.ProductId)
+                .ForeignKey("dbo.Users", t => t.UserId)
                 .Index(t => t.UserId)
                 .Index(t => t.ProductId);
             
