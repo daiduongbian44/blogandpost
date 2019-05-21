@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2041
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC01BlogAndPost", "MC01BlogAndPost\MC01BlogAndPost.csproj", "{9F7F16AB-DE61-4A79-91CD-4E83EC01C01C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC01ApiBlogAndPost", "MC01ApiBlogAndPost\MC01ApiBlogAndPost.csproj", "{9C944397-9534-4F97-B107-BE4B67DF20DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MC01ApiProduct", "MC01ApiProduct\MC01ApiProduct.csproj", "{C1330E07-08F3-4943-BCBC-56821EBA91D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9C944397-9534-4F97-B107-BE4B67DF20DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C944397-9534-4F97-B107-BE4B67DF20DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C944397-9534-4F97-B107-BE4B67DF20DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1330E07-08F3-4943-BCBC-56821EBA91D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1330E07-08F3-4943-BCBC-56821EBA91D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1330E07-08F3-4943-BCBC-56821EBA91D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1330E07-08F3-4943-BCBC-56821EBA91D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
