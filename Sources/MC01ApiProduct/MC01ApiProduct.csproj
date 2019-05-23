@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201905210946349_AddUserEmail.Designer.cs">
       <DependentUpon>201905210946349_AddUserEmail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905231546189_InitUser.cs" />
+    <Compile Include="Migrations\201905231546189_InitUser.Designer.cs">
+      <DependentUpon>201905231546189_InitUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoryInputModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
@@ -303,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905210946349_AddUserEmail.resx">
       <DependentUpon>201905210946349_AddUserEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905231546189_InitUser.resx">
+      <DependentUpon>201905231546189_InitUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
