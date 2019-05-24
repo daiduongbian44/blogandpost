@@ -44,8 +44,12 @@ namespace MC01ApiProduct.Controllers
         [ResponseType(typeof(DataApiResult<bool>))]
         public IHttpActionResult Post([FromBody] ProductInputModel model)
         {
-            var result = _productService.AddProduct(model);
-            return Ok(WebSuccess<bool>(result));
+            if (ModelState.IsValid)
+            {
+                var result = _productService.AddProduct(model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
         }
 
         /// <summary>

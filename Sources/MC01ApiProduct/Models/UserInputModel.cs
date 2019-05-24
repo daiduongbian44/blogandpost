@@ -12,6 +12,8 @@ namespace MC01ApiProduct.Models
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
     }
 }

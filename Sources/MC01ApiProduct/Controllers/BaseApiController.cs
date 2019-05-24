@@ -27,5 +27,14 @@ namespace MC01ApiProduct.Controllers
             };
         }
 
+        protected DataApiResult WebFail()
+        {
+            return new DataApiResult()
+            {
+                IsSuccess = false,
+                Data = "Please check your data model before saving"
+            };
+        }
+
     }
 }

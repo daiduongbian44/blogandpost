@@ -21,7 +21,12 @@ namespace MC01ApiProduct.Services.Impls
 
         public List<ProductViewModel> GetLists()
         {
-            return this._context.Products.ToList().Select(Mapper.Map<Product, ProductViewModel>).ToList();
+            return this._context.Products.ToList().Select(p =>
+            {
+                var productVm = Mapper.Map<Product, ProductViewModel>(p);
+                productVm.TotalUserLiked = p.UserProducts.Count();
+                return productVm;
+            }).ToList();
         }
 
         public bool AddProduct(ProductInputModel model)

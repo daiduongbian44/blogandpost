@@ -7,6 +7,7 @@ import ProductManagement from './components/ProductManagement'
 import UserManagement from './components/UserManagement'
 import CategoryManagement from './components/CategoryManagement'
 import UserDetail from './components/UserDetail'
+import UserNew from './components/UserNew'
 
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import classnames from 'classnames';
@@ -26,6 +27,7 @@ function App() {
 
     return (
         <div className="container">
+            <h1>Data management</h1>
             <Nav tabs className="mt-2">
                 <NavItem>
                     <NavLink
@@ -60,6 +62,7 @@ function App() {
             </TabContent>
             <ToastContainer />
             <UserDetail state={state} dispatch={dispatch} />
+            <UserNew state={state} dispatch={dispatch} />
         </div>
     )
 }

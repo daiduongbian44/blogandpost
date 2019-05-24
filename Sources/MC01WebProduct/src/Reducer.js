@@ -28,6 +28,17 @@ function Reducer(state, action) {
                 IsOpenUserDetail: !state.IsOpenUserDetail,
                 UserDetail: action.payload.userItem
             }
+        case constants.TOGGLE_DISPLAY_USER_NEW:
+            return {
+                ...state,
+                IsOpenNewUser: action.payload.isOpen,
+                NewUser: action.payload.NewUser
+            }
+        case constants.CHANGE_USER_NEW:
+            return {
+                ...state,
+                NewUser: action.payload
+            }
         default:
             return state;
     }

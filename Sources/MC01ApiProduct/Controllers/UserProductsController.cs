@@ -32,10 +32,14 @@ namespace MC01ApiProduct.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [ResponseType(typeof(DataApiResult<bool>))]
-        public IHttpActionResult Post(UserLikeProductInputModel model)
+        public IHttpActionResult Post([FromBody] UserLikeProductInputModel model)
         {
-            var result = _userService.FavoriteProduct(model);
-            return Ok(WebSuccess<bool>(result));
+            if (ModelState.IsValid)
+            {
+                var result = _userService.FavoriteProduct(model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
         }
     }
 }

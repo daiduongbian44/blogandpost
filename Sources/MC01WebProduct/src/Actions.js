@@ -79,6 +79,66 @@ export async function likeProductAsync(dispatch, userId, productId, status) {
         }
 
         await getListUsersAsync(dispatch)
+        await getListProductsAsync(dispatch)
+    } catch (error) {
+        console.error(error)
+        toast.error("Error loading!", {
+            position: toast.POSITION.TOP_RIGHT
+        })
+    }
+}
+
+export function toggleDisplayUserNew(dispatch, isOpen) {
+    if(isOpen) {
+        dispatch({
+            type: constants.TOGGLE_DISPLAY_USER_NEW,
+            payload: {
+                isOpen,
+                NewUser: {
+                    Name:"",
+                    Email: ""
+                }
+            }
+        })
+    } else {
+        dispatch({
+            type: constants.TOGGLE_DISPLAY_USER_NEW,
+            payload: {
+                isOpen,
+                NewUser: null
+            }
+        })
+    }
+}
+
+export function changeNewUserData(dispatch, newUser) {
+    dispatch({
+        type: constants.CHANGE_USER_NEW,
+        payload: newUser
+    })
+}
+
+export async function addNewUserAsync(dispatch, newUser) {
+    try {
+        if(newUser.Email && newUser.Email !== ''
+        && newUser.Name && newUser.Name !== '') {
+            const response = await axios.post(constants.UserResourceUrl, newUser)
+            toggleDisplayUserNew(dispatch, false)
+            if(response.data.Data) {
+                toast.success("Added new user successfully!", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                await getListUsersAsync(dispatch)
+            } else {
+                toast.error("Invalid data when adding!", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+            }
+        } else {
+            toast.error("Invalid data!", {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        }
     } catch (error) {
         console.error(error)
         toast.error("Error loading!", {

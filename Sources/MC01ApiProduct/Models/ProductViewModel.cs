@@ -17,5 +17,7 @@ namespace MC01ApiProduct.Models
 
         public int CategoryId { get; set; }
         public CategoryViewModel Category { get; set; }
+
+        public int TotalUserLiked { get; set; }
     }
 }

@@ -43,10 +43,14 @@ namespace MC01ApiProduct.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [ResponseType(typeof(DataApiResult<bool>))]
-        public IHttpActionResult Post(CategoryInputModel model)
+        public IHttpActionResult Post([FromBody] CategoryInputModel model)
         {
-            var result = _categoryService.AddCategory(model);
-            return Ok(WebSuccess<bool>(result));
+            if(ModelState.IsValid)
+            {
+                var result = _categoryService.AddCategory(model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
         }
 
         /// <summary>

@@ -12,9 +12,11 @@ function UserManagement({state, dispatch}) {
         fn.toggleDiplayUserDetail(dispatch, userItem)
     }
 
+    let newHandler = fn.toggleDisplayUserNew.bind(this, dispatch, true)
+
     return (
         <div>
-            <Button color="success" className="mt-3 mb-2">Add new user</Button>
+            <Button color="success" className="mt-3 mb-2" onClick={newHandler}>Add new user</Button>
             <Table>
                 <thead>
                     <tr>
