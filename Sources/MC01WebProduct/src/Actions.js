@@ -9,6 +9,9 @@ export function handleChangeTab(dispatch, tabId) {
 export async function getListProductsAsync(dispatch) {
     try {
         const response = await axios.get(constants.ProductResourceUrl)
+        toast.success("Loaded list products!", {
+            position: toast.POSITION.TOP_RIGHT
+        })
         dispatch({
             type: constants.FETCH_LIST_PRODUCTS,
             payload: response.data.Data
@@ -24,6 +27,9 @@ export async function getListProductsAsync(dispatch) {
 export async function getListUsersAsync(dispatch) {
     try {
         const response = await axios.get(constants.UserResourceUrl)
+        toast.success("Loaded list users!", {
+            position: toast.POSITION.TOP_RIGHT
+        })
         dispatch({
             type: constants.FETCH_LIST_USERS,
             payload: response.data.Data
@@ -39,6 +45,9 @@ export async function getListUsersAsync(dispatch) {
 export async function getListCategoriesAsync(dispatch) {
     try {
         const response = await axios.get(constants.CategoryResourceUrl)
+        toast.success("Loaded list categories!", {
+            position: toast.POSITION.TOP_RIGHT
+        })
         dispatch({
             type: constants.FETCH_LIST_CATEGORIES,
             payload: response.data.Data
