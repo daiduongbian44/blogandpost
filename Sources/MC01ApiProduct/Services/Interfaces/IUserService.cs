@@ -14,5 +14,6 @@ namespace MC01ApiProduct.Services.Interfaces
         bool DeleteUser(int userId);
 
         bool FavoriteProduct(UserLikeProductInputModel model);
+        bool UpdateUser(int id, UserInputModel model);
     }
 }

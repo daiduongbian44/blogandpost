@@ -12,5 +12,6 @@ namespace MC01ApiProduct.Services.Interfaces
         List<ProductViewModel> GetLists();
         bool AddProduct(ProductInputModel model);
         bool DeleteProduct(int productId);
+        bool UpdateProduct(int id, ProductInputModel model);
     }
 }

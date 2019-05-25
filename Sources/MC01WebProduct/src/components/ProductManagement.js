@@ -20,6 +20,7 @@ function ProductManagement({state, dispatch}) {
                         <th>Image</th>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Description</th>
                         <th>Total users liked</th>
                         <th>Options</th>
                     </tr>
@@ -35,6 +36,7 @@ function ProductManagement({state, dispatch}) {
                                     </td>
                                     <td>{item.Name}</td>
                                     <td>{item.Category.Name}</td>
+                                    <td>{item.Description}</td>
                                     <td>{item.TotalUserLiked}</td>
                                     <td>
                                         <Button color="secondary" className="mr-2 mb-2">Edit</Button>

@@ -70,5 +70,22 @@ namespace MC01ApiProduct.Services.Impls
                 return true;
             }
         }
+
+        public bool UpdateUser(int id, UserInputModel model)
+        {
+            var existedUser = _context.Users.ToArray()
+                .FirstOrDefault(u => u.UserId == id);
+
+            var existedEmailUser = _context.Users.ToArray()
+                .FirstOrDefault(u => u.UserId != id &&
+                u.Email.ToLowerInvariant().Equals(model.Email.ToLowerInvariant()));
+
+            if (existedEmailUser != null || existedUser == null) return false;
+
+            Mapper.Map<UserInputModel, User>(model, existedUser);
+
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

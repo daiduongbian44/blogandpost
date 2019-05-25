@@ -52,5 +52,21 @@ namespace MC01ApiProduct.Services.Impls
             _context.SaveChanges();
             return true;
         }
+
+        public bool UpdateProduct(int id, ProductInputModel model)
+        {
+            var existedProd =
+                _context.Products.FirstOrDefault(c => c.ProductId == id);
+
+            var existedProdName =
+                _context.Products.FirstOrDefault(c => c.Name.Equals(model.Name) && c.ProductId != id);
+
+            if (existedProdName != null || existedProd == null) return false;
+
+            Mapper.Map<ProductInputModel, Product>(model, existedProd);
+
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

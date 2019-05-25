@@ -64,5 +64,22 @@ namespace MC01ApiProduct.Controllers
             var result = _userService.DeleteUser(id);
             return Ok(WebSuccess<bool>(result));
         }
+
+        /// <summary>
+        /// Update an user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(DataApiResult<bool>))]
+        public IHttpActionResult Put(int id, [FromBody] UserInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _userService.UpdateUser(id, model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
+        }
     }
 }

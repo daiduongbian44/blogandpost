@@ -63,5 +63,22 @@ namespace MC01ApiProduct.Controllers
             var result = _productService.DeleteProduct(id);
             return Ok(WebSuccess<bool>(result));
         }
+
+        /// <summary>
+        /// Update a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(DataApiResult<bool>))]
+        public IHttpActionResult Put(int id, [FromBody] ProductInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _productService.UpdateProduct(id, model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
+        }
     }
 }

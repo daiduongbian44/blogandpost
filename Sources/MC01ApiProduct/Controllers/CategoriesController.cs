@@ -64,5 +64,22 @@ namespace MC01ApiProduct.Controllers
             var result = _categoryService.DeleteCategory(id);
             return Ok(WebSuccess<bool>(result));
         }
+
+        /// <summary>
+        /// Update a category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [ResponseType(typeof(DataApiResult<bool>))]
+        public IHttpActionResult Put(int id, [FromBody] CategoryInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = _categoryService.UpdateCategory(id, model);
+                return Ok(WebSuccess<bool>(result));
+            }
+            return Ok(WebFail());
+        }
     }
 }

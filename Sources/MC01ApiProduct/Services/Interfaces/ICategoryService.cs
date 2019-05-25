@@ -12,5 +12,6 @@ namespace MC01ApiProduct.Services.Interfaces
         List<CategoryViewModel> GetLists();
         bool AddCategory(CategoryInputModel model);
         bool DeleteCategory(int categoryId);
+        bool UpdateCategory(int id, CategoryInputModel model);
     }
 }

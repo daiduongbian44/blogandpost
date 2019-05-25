@@ -48,5 +48,21 @@ namespace MC01ApiProduct.Services.Impls
             _context.SaveChanges();
             return true;
         }
+
+        public bool UpdateCategory(int id, CategoryInputModel model)
+        {
+            var existedCat =
+               _context.Categories.FirstOrDefault(c => c.CategoryId == id);
+
+            var existedCatName =
+               _context.Categories.FirstOrDefault(c => c.Name.Equals(model.Name) && c.CategoryId != id);
+
+            if (existedCatName != null || existedCat == null) return false;
+
+            Mapper.Map<CategoryInputModel, Category>(model, existedCat);
+
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
