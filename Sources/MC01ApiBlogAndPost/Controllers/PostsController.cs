@@ -18,6 +18,15 @@ namespace MC01ApiBlogAndPost.Controllers
             this.postService = postService;
         }
 
+        // GET: api/Posts
+        public IHttpActionResult Get()
+        {
+            return Ok(new
+            {
+                ListPosts = this.postService.GetLists()
+            });
+        }
+
         // POST: api/Posts
         public IHttpActionResult Post([FromBody] Post post)
         {
