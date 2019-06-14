@@ -11,6 +11,7 @@ namespace MC01ApiBlogAndPost.Services.Mocks
     {
 
         private static List<Post> ListPosts = new List<Post>();
+        private static int AutoIncrease = 1;
 
         public MockPostService()
         {
@@ -20,7 +21,7 @@ namespace MC01ApiBlogAndPost.Services.Mocks
                 {
                     ListPosts.Add(new Post()
                     {
-                        PostId = i,
+                        PostId = (AutoIncrease++),
                         Title = "Title post " + i,
                         Content = "Content post " + i,
                         BlogId = (i % 10) + 1
@@ -31,6 +32,7 @@ namespace MC01ApiBlogAndPost.Services.Mocks
 
         public bool AddNew(Post data)
         {
+            data.PostId = (AutoIncrease++);
             ListPosts.Add(data);
             return true;
         }
