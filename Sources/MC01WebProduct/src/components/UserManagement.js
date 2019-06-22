@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react'
 import { Table, Button } from 'reactstrap'
 import * as fn from '../Actions'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
 function UserManagement({state, dispatch}) {
-
-    useEffect(() => {
-        fn.getListUsersAsync(dispatch)
-    }, [])
 
     let detailHandler = (userItem) => {
         fn.toggleDiplayUserDetail(dispatch, userItem)
@@ -40,6 +37,7 @@ function UserManagement({state, dispatch}) {
                                         <Button color="primary" 
                                             className="mr-2 mb-2"
                                             onClick={detailHandler.bind(this, item)} >Detail</Button>
+                                        <Link className="mr-2 mb-2" to={`/user-detail/${item.UserId}`}>Page detail</Link>
                                         <Button color="secondary" className="mr-2 mb-2">Edit</Button>
                                         <Button color="danger" className="mr-2 mb-2">Delete</Button>
                                     </td>

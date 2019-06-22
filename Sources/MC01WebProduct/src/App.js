@@ -1,5 +1,5 @@
 import './App.scss'
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import Reducer from './Reducer'
 import InitStore from './InitStore'
 
@@ -16,14 +16,14 @@ import * as fn from './Actions'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"
+
 toast.configure({
     autoClose: 8000,
     draggable: false
 })
 
-function App() {
-
-    const [state, dispatch] = useReducer(Reducer, InitStore)
+function HomePage({state, dispatch}) {
 
     return (
         <div className="container">
@@ -60,9 +60,49 @@ function App() {
                     <CategoryManagement state={state} dispatch={dispatch} />
                 </TabPane>
             </TabContent>
-            <ToastContainer />
             <UserDetail state={state} dispatch={dispatch} />
             <UserNew state={state} dispatch={dispatch} />
+        </div>
+    )
+}
+
+function UserDetailPage({state, dispatch}, {match, history}) {
+    
+    useEffect(() => {
+        if(!state.UserDetail) {
+            let userItem = state.ListUsers.filter((user) => user.UserId == match.params.id)[0];
+            fn.toggleDiplayUserDetail(dispatch, userItem)
+        }
+    }, [])
+
+    return (
+        <UserDetail state={state} dispatch={dispatch} isShowBackToHome={true} history={history}/>
+    )
+}
+
+function AppRouter({state, dispatch}) {
+    useEffect(() => {
+        fn.getListUsersAsync(dispatch)
+        fn.getListProductsAsync(dispatch)
+        fn.getListCategoriesAsync(dispatch)
+    }, [])
+
+    return (
+        <Router>
+            <Route exact path="/" component={HomePage.bind(this, {state, dispatch})} />
+            <Route path="/user-detail/:id" component={UserDetailPage.bind(this, {state, dispatch})} />
+        </Router>
+    )
+}
+
+function App() {
+
+    const [state, dispatch] = useReducer(Reducer, InitStore)
+
+    return (
+        <div className="container">
+            <AppRouter state={state} dispatch={dispatch} />
+            <ToastContainer />
         </div>
     )
 }

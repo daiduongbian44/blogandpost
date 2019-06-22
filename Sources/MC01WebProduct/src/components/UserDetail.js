@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from 'reactstrap'
 import * as fn from '../Actions'
 import './UserDetail.scss'
+import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom"
 
 function shouldShowLikeButton(productItem, userItem) {
     let itemExisted = userItem.ListLikedProducts.filter((item) => {
@@ -10,8 +11,15 @@ function shouldShowLikeButton(productItem, userItem) {
     return itemExisted.length <= 0
 }
 
-function UserDetail({state, dispatch}) {
-    let toggleHandler = fn.toggleDiplayUserDetail.bind(this, dispatch, null)
+function UserDetail({state, dispatch, isShowBackToHome, history}) {
+
+    let toggleHandler = () => {
+        fn.toggleDiplayUserDetail.bind(this, dispatch, null)()
+        if(isShowBackToHome) {
+            history.push('/')
+        }
+    }
+
     let likeHandler = fn.likeProductAsync
 
     return (
@@ -24,6 +32,12 @@ function UserDetail({state, dispatch}) {
                         size="lg">
                         <ModalHeader toggle={toggleHandler}>User detail: {state.UserDetail.Name}</ModalHeader>
                         <ModalBody>
+                            {
+                                isShowBackToHome ?
+                                <Button outline color="primary"
+                                    onClick={toggleHandler}>Page home</Button>
+                                : null
+                            }
                             <p>Email: <a href="#">{state.UserDetail.Email}</a></p>
                             <p>Total liked products: {state.UserDetail.ListLikedProducts.length}</p>
                             <hr/>

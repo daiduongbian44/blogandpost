@@ -4,10 +4,6 @@ import * as fn from '../Actions'
 
 function CategoryManagement({state, dispatch}) {
 
-    useEffect(() => {
-        fn.getListCategoriesAsync(dispatch)
-    }, [])
-
     return (
         <div>
             <Button color="success" className="mt-3 mb-2">Add new category</Button>

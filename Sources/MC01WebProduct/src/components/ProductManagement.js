@@ -4,11 +4,7 @@ import * as fn from '../Actions'
 import './ProductManagement.scss'
 
 function ProductManagement({state, dispatch}) {
-
-    useEffect(() => {
-        fn.getListProductsAsync(dispatch)
-    }, [])
-
+    
     return (
         <div className="ProductManagement">
             <Button color="success" className="mt-3 mb-2">Add new product</Button>
